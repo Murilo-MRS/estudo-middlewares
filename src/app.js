@@ -55,14 +55,13 @@ const validateTeam = (req, res, next) => {
     res.status(201).json(updated);
   });
 
-app.delete('/teams/:id', (req, res) => {
-  const id = Number(req.params.id);
-  const team = teams.find(t => t.id === id);
-  if (team) {
+  app.delete('/teams/:id', existingId, (req, res) => {
+    const id = Number(req.params.id);
+    const team = teams.find(t => t.id === id);
     const index = teams.indexOf(team);
     teams.splice(index, 1);
-  }
-  res.sendStatus(200);
-});
+  
+    res.sendStatus(200);
+  });
 
 module.exports = app;
