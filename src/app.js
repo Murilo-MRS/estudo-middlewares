@@ -1,4 +1,6 @@
 const express = require('express');
+const validateTeam = require('./middlewares/validateTeam');
+const existingId = require('./middlewares/existingId');
 
 const app = express();
 
@@ -12,31 +14,11 @@ app.use(express.json());
 
 app.get('/teams', (req, res) => res.json(teams));
 
-const existingId = (req, res, next) => {
-  const id = Number(req.params.id);
-  if (teams.some((t) => t.id === id)) {
-      next();
-  } else {
-      res.sendStatus(404);
-  }
-}
-
 app.get('/teams/:id', existingId, (req, res) => {
     const id = Number(req.params.id);
     const team = teams.find(t => t.id === id);
     res.json(team);
 });
-
-// MIDDLEWAREs post e put
-
-const validateTeam = (req, res, next) => {
-    const requiredProperties = ['nome', 'sigla'];
-    if (requiredProperties.every((property) => property in req.body)) {
-      next(); // Chama o próximo middleware
-    } else {
-      res.sendStatus(400); // Ou já responde avisando que deu errado
-    }
-  };
 
   // Arranja os middlewares para chamar validateTeam primeiro
   app.post('/teams', validateTeam, (req, res) => {
