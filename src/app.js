@@ -16,7 +16,7 @@ app.get('/teams', (req, res) => res.json(teams));
 
 app.get('/teams/:id', existingId, (req, res) => {
     const id = Number(req.params.id);
-    const team = teams.find(t => t.id === id);
+    const team = teams.find((t) => t.id === id);
     res.json(team);
 });
 
@@ -28,9 +28,9 @@ app.get('/teams/:id', existingId, (req, res) => {
     res.status(201).json(team);
   });
   
-  app.put('/teams/:id', validateTeam, existingId,(req, res) => {
+  app.put('/teams/:id', validateTeam, existingId, (req, res) => {
     const id = Number(req.params.id);
-    const team = teams.find(t => t.id === id);
+    const team = teams.find((t) => t.id === id);
     const index = teams.indexOf(team);
     const updated = { id, ...req.body };
     teams.splice(index, 1, updated);
@@ -39,7 +39,7 @@ app.get('/teams/:id', existingId, (req, res) => {
 
   app.delete('/teams/:id', existingId, (req, res) => {
     const id = Number(req.params.id);
-    const team = teams.find(t => t.id === id);
+    const team = teams.find((t) => t.id === id);
     const index = teams.indexOf(team);
     teams.splice(index, 1);
   
